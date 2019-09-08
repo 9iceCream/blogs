@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monolog7.blogs.dao.RolePermissionDao">
+    <select id="getRole" resultType="com.monolog7.blogs.entity.RolePermission">
+      select * from tb_role_permission where role = #{role}
+    </select>
+    <!--<insert id="addRole">
+      insert into tb_role_permission (role,role_name,permission) values (#{role},#{roleName},#{permission})
+    </insert>
+    <update id="updateRole">
+      update tb_role_permission set role=#{role},role_name=#{roleName},permission=#{permission} where role = #{role}
+    </update>
+    <delete id="deleteRole">
+      delete from tb_role_permission where role=#{role}
+    </delete>-->
+</mapper>
