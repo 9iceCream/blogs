@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.monolog7.blogs.dao.BlogsDao">
+    <select id="queryBlogsByOwner" resultType="com.monolog7.blogs.entity.Blog">
+        select id,owner_id,title,cover_img,tags,create_time from tb_blogs where owner_id = #{owner_id};
+    </select>
+
+    <select id="queryBlogsById" resultType="com.monolog7.blogs.entity.Blog">
+        select * from tb_blogs where id = #{id}
+    </select>
+</mapper>
