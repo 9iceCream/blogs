@@ -23,4 +23,12 @@ public class BlogsController {
         return response;
     }
 
+    @ApiOperation(value = "查询博客内容")
+    @ApiImplicitParams({@ApiImplicitParam(name="blogId",value = "博客",required = true,dataType = "Integer")})
+    @ApiResponses({@ApiResponse(code = 200,message = "博客内容",response = String.class)})
+    @RequestMapping(value = "/blogs/blogContent",method = RequestMethod.GET)
+    public String getBlogsContentById(@RequestParam(name = "blogId") int id){
+        String response = blogsService.queryBlogsContentById(id);
+        return response;
+    }
 }

@@ -18,4 +18,8 @@ public class BlogsService {
         return JSON.toJSONString(blogs);
     }
 
+    public String queryBlogsContentById(int id){
+        Blog blog = blogsDao.queryBlogsById(id);
+        return JSON.toJSONString(blog);
+    }
 }
