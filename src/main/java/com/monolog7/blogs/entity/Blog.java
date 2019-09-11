@@ -20,4 +20,6 @@ public class Blog {
     private long updateTime;
     private String contents;
     private String images;
+    private String timeStr;
+    private String[] tagArr;
 }
