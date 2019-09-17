@@ -34,13 +34,29 @@ public class BlogsService {
         return JSON.toJSONString(blog);
     }
 
+    public String addBlog(Blog blog){
+        int result = blogsDao.insertOrUpdateBlog(blog);
+        if(result>0){
+            Blog blogResp = execTimeAndTag(blogsDao.queryBlogsByBlogId(blog.getOwnerId(),blog.getBlogId()));
+            return JSON.toJSONString(blogResp);
+        }else {
+            JSONObject resp = new JSONObject();
+            resp.put("error","添加或者更新失败");
+            return resp.toJSONString();
+        }
+    }
+
     private Blog execTimeAndTag(Blog blog){
         long createTime = blog.getCreateTime();
         String timeStr = simpleDateFormat.format(new Date(createTime*1000));
-        blog.setTimeStr(timeStr);
+        if(timeStr!=null){
+            blog.setTimeStr(timeStr);
+        }
         String tags = blog.getTags();
-        String[] tagArr = tags.split(",");
-        blog.setTagArr(tagArr);
+        if(tags!=null && !"".equals(tags)){
+            String[] tagArr = tags.split(",");
+            blog.setTagArr(tagArr);
+        }
         return blog;
     }
 }

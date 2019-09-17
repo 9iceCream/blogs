@@ -11,6 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Blog {
     private int id;
+    private long blogId;
     private int ownerId;
     private String title;
     private String info;
@@ -19,6 +20,7 @@ public class Blog {
     private long createTime;
     private long updateTime;
     private String contents;
+    private String contentsMd;
     private String images;
     private String timeStr;
     private String[] tagArr;

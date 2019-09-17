@@ -10,4 +10,14 @@
     <select id="queryBlogsById" resultType="com.monolog7.blogs.entity.Blog">
         select * from tb_blogs where id = #{id}
     </select>
+
+    <select id="queryBlogsByBlogId" resultType="com.monolog7.blogs.entity.Blog">
+        select * from tb_blogs where owner_id = #{ownerId} and blog_id = #{blogId}
+    </select>
+
+    <insert id="insertOrUpdateBlog" parameterType="com.monolog7.blogs.entity.Blog">
+        insert into tb_blogs (blog_id, owner_id, title, info, cover_img, tags, create_time, update_time, contents, contents_md, images)
+        values (#{blogId},#{ownerId},#{title},#{info},#{coverImg},#{tags},#{createTime},#{updateTime},#{contents},#{contentsMd},#{images})
+        ON DUPLICATE KEY UPDATE title = #{title},info = #{info},cover_img = #{coverImg},tags = #{tags}, update_time = #{updateTime}, contents = #{contents}, contents_md = #{contentsMd}, images = #{images};
+    </insert>
 </mapper>

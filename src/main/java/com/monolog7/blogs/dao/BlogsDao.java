@@ -10,4 +10,6 @@ import java.util.List;
 public interface BlogsDao {
     List<Blog> queryBlogsByOwner(@Param("owner_id") int ownerId);
     Blog queryBlogsById(int id);
+    Blog queryBlogsByBlogId(int ownerId,long blogId);
+    int insertOrUpdateBlog(Blog blog);
 }
