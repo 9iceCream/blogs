@@ -34,4 +34,8 @@ public class BlogsOwnerService {
         result.put("menu",JSONArray.parseArray(rolePermission.getMenu()));
         return result.toJSONString();
     }
+
+    public String getMyInfo(String username,String password){
+        return "";
+    }
 }
