@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `tb_blogs_owner`;
 CREATE table `tb_blogs_owner`(
   `id` INT AUTO_INCREMENT,
 	`name` VARCHAR(12) NOT NULL,
+	`passwd` varchar(255) NOT NULL,
 	`info` VARCHAR(128) NOT NULL,
 	`role` INT(2),
 	`create_time` int,

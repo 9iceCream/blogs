@@ -6,4 +6,11 @@
     <select id="queryBlogsOwnerById" resultType="com.monolog7.blogs.entity.BlogsOwner">
         select * from tb_blogs_owner where id = #{id};
     </select>
+    <insert id="addUser" parameterType="com.monolog7.blogs.entity.BlogsOwner">
+        insert into tb_blogs_owner (name, passwd , info, role, create_time, update_time)
+        value(#{name},#{passwd},#{info},#{role},#{create_time},#{update_time});
+    </insert>
+    <select id="queryUserByName" resultType="com.monolog7.blogs.entity.BlogsOwner">
+        select * from tb_blogs_owner where name = #{name};
+    </select>
 </mapper>
