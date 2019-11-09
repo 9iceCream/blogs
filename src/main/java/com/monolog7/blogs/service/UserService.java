@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 @Service
 public class UserService {
 
@@ -64,25 +66,23 @@ public class UserService {
         return result;
     }
 
-    public String checkUserLogin(BlogsOwner blogsOwner){
+    public String userLogin(BlogsOwner blogsOwner, HttpSession session){
         BlogsOwner srcBlogsOwner= blogsOwnerDao.queryUserByName(blogsOwner.getName());
         String result = "";
+        JSONObject jsonObject = new JSONObject();
         if(isNull(srcBlogsOwner)){
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",ErrorInfo.CODE_1002.getCode());
             jsonObject.put("message",ErrorInfo.CODE_1002.getMessage());
-            result = jsonObject.toJSONString();
         }else if(!srcBlogsOwner.getPasswd().equals(blogsOwner.getPasswd())){
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",ErrorInfo.CODE_1003.getCode());
             jsonObject.put("message",ErrorInfo.CODE_1003.getMessage());
-            result = jsonObject.toJSONString();
         }else{
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("code",ErrorInfo.CODE_0.getCode());
             jsonObject.put("message",ErrorInfo.CODE_0.getMessage());
-            result = jsonObject.toJSONString();
+            session.setAttribute("username",blogsOwner.getName());
+            session.setAttribute("userId",srcBlogsOwner.getId());
         }
+        result = jsonObject.toJSONString();
         return result;
     }
 

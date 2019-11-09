@@ -47,9 +47,13 @@ public class BlogsApplicationTests {
         BlogsOwner blogsOwner = new BlogsOwner();
         blogsOwner.setName(name);
         blogsOwner.setPasswd(passwd);
-        String result = userService.checkUserLogin(blogsOwner);
-        System.out.println(result);
+//        String result = userService.checkUserLogin(blogsOwner,);
+//        System.out.println(result);
     }
 
-
+    @Test
+    public void testId(){
+        int num = Integer.valueOf(null);
+        System.out.println(num);
+    }
 }

@@ -6,9 +6,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.monolog7.blogs.dao.BlogsOwnerDao;
 import com.monolog7.blogs.dao.RolePermissionDao;
 import com.monolog7.blogs.entity.BlogsOwner;
+import com.monolog7.blogs.entity.DictionaryConst;
+import com.monolog7.blogs.entity.ErrorInfo;
 import com.monolog7.blogs.entity.RolePermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 public class BlogsOwnerService {
@@ -35,7 +39,28 @@ public class BlogsOwnerService {
         return result.toJSONString();
     }
 
-    public String getMyInfo(String username,String password){
-        return "";
+    public String getMyInfo(HttpSession session, DictionaryConst user_oper){
+        String result = "";
+
+        String username = String.valueOf(session.getAttribute("username"));
+
+        JSONObject jsonObject = new JSONObject();
+        if("null".equals(username)){//未登录状态
+            jsonObject.put("code",ErrorInfo.CODE_1004.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_1004.getMessage());
+        } else{
+            jsonObject.put("code",ErrorInfo.CODE_0.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_0.getMessage());
+            if(DictionaryConst.USER_OPER_1.getCode() == user_oper.getCode()){
+                BlogsOwner blogsOwner = blogsOwnerDao.queryUserByName(username);
+                RolePermission rolePermission = rolePermissionDao.getRole(blogsOwner.getRole());
+                JSONObject owner = JSON.parseObject(JSON.toJSONString(blogsOwner));
+                owner.put("menu", JSONArray.parseArray(rolePermission.getMenu()));
+                jsonObject.put("data",owner);
+            }
+        }
+        result = jsonObject.toJSONString();
+        return result;
     }
+
 }
