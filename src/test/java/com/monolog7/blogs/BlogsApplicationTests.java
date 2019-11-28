@@ -56,4 +56,10 @@ public class BlogsApplicationTests {
         int num = Integer.valueOf(null);
         System.out.println(num);
     }
+
+    @Test
+    public void testGetBlogs(){
+        String result = blogsService.queryBlogsByName("诗酒趁年华");
+        System.out.println("结果：" + result);
+    }
 }
