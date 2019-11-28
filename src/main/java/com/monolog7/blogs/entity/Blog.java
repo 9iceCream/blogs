@@ -24,4 +24,6 @@ public class Blog {
     private String images;
     private String timeStr;
     private String[] tagArr;
+    //delete_flag 删除标志 1：正常 2：删除
+    private int delete_flag;
 }

@@ -22,21 +22,21 @@ public class BlogsApplicationTests {
 
     @Test
     public void contextLoads() {
-        Blog blog = new Blog();
+        /*Blog blog = new Blog();
         blog.setBlogId((System.currentTimeMillis() / 1000));
         blog.setOwnerId(1);
         blog.setTitle("123");
         String result = blogsService.addBlog(blog);
-        System.out.println(result);
+        System.out.println(result);*/
     }
     @Test
     public void testUserRegister(){
-        BlogsOwner blogsOwner = new BlogsOwner();
+       /* BlogsOwner blogsOwner = new BlogsOwner();
         blogsOwner.setName("诗酒趁年华");
         blogsOwner.setPasswd("cccccc");
 
         String result = userService.addUser(blogsOwner);
-        System.out.println(result);
+        System.out.println(result);*/
     }
 
     @Test
@@ -53,8 +53,10 @@ public class BlogsApplicationTests {
 
     @Test
     public void testId(){
-        int num = Integer.valueOf(null);
-        System.out.println(num);
+        /*int num = Integer.valueOf(null);
+        System.out.println(num);*/
+        /*String result = blogsService.deleteBlog(3,1574862530);
+        System.out.println(result);*/
     }
 
     @Test

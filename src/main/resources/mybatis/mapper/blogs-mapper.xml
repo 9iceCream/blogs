@@ -4,7 +4,7 @@
 
 <mapper namespace="com.monolog7.blogs.dao.BlogsDao">
     <select id="queryBlogsByOwner" resultType="com.monolog7.blogs.entity.Blog">
-        select id,owner_id,blog_id,title,info,cover_img,tags,create_time from tb_blogs where owner_id = #{owner_id};
+        select id,owner_id,blog_id,title,info,cover_img,tags,create_time from tb_blogs where owner_id = #{owner_id} and delete_flag = #{delete_flag};
     </select>
 
     <select id="queryBlogsById" resultType="com.monolog7.blogs.entity.Blog">
@@ -20,4 +20,22 @@
         values (#{blogId},#{ownerId},#{title},#{info},#{coverImg},#{tags},#{createTime},#{updateTime},#{contents},#{contentsMd},#{images})
         ON DUPLICATE KEY UPDATE title = #{title},info = #{info},cover_img = #{coverImg},tags = #{tags}, update_time = #{updateTime}, contents = #{contents}, contents_md = #{contentsMd}, images = #{images};
     </insert>
+    
+    <insert id="insertIntoBlogDustbin">
+        insert into tb_blogs_dustbin
+        (id, blog_id, owner_id, title, info, cover_img, tags, create_time, update_time,
+         delete_time, contents, contents_md, images)
+         select id, blog_id, owner_id, title, info, cover_img, tags, create_time, update_time,
+         unix_timestamp(now()) as delete_time, contents, contents_md, images
+         from tb_blogs
+         where owner_id = #{owner_id} and blog_id = #{blog_id};
+    </insert>
+
+    <update id="updateBlogToDelete">
+        update db_blogs.tb_blogs set delete_flag = 2,db_blogs.tb_blogs.update_time = unix_timestamp(now()) where db_blogs.tb_blogs.owner_id = #{owner_id} and db_blogs.tb_blogs.blog_id = #{blog_id}
+    </update>
+
+    <update id="updateBlogToNormal">
+        update db_blogs.tb_blogs set delete_flag = 1,db_blogs.tb_blogs.update_time = unix_timestamp(now()) where db_blogs.tb_blogs.owner_id = #{owner_id} and db_blogs.tb_blogs.blog_id = #{blog_id}
+    </update>
 </mapper>

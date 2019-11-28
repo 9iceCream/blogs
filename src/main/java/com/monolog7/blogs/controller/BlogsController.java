@@ -63,4 +63,23 @@ public class BlogsController {
         }
         return response;
     }
+
+    @ApiOperation(value = "删除博客")
+    /*@ApiImplicitParams({@ApiImplicitParam(name="blogId",value = "博客",required = true,dataType = "Integer")})*/
+    @ApiResponses({@ApiResponse(code = 200,message = "博客内容",response = String.class)})
+    @CrossOrigin(allowCredentials = "true")
+    @RequestMapping(value = "/blogs/deleteBlogContent",method = RequestMethod.POST)
+    public String deleteBlog(@RequestBody Blog blog,HttpSession session){
+        String response = "";
+        Object userIdObj = session.getAttribute("userId");
+        JSONObject jsonObject = new JSONObject();
+        if(userIdObj == null){
+            jsonObject.put("code",ErrorInfo.CODE_1004.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_1004.getMessage());
+            response = jsonObject.toJSONString();
+        }else{
+            response = blogsService.deleteBlog(blog.getOwnerId(),blog.getBlogId());
+        }
+        return response;
+    }
 }

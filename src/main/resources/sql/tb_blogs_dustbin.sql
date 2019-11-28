@@ -1,6 +1,6 @@
 use db_blogs;
-DROP TABLE IF EXISTS `tb_blogs`;
-CREATE table `tb_blogs`(
+DROP TABLE IF EXISTS `tb_blogs_dustbin`;
+CREATE table `tb_blogs_dustbin`(
   `id` INT AUTO_INCREMENT,
   `blog_id` INT not null,
   `owner_id` INT not null,
@@ -10,9 +10,10 @@ CREATE table `tb_blogs`(
   `tags` VARCHAR(512),
   `create_time` int,
   `update_time` int,
+  `delete_time` int,
   `contents` text,
   `contents_md` text,
   `images` varchar(2014),
   PRIMARY KEY(`id`),
-  UNIQUE index_blogs (`owner_id`,`blog_id`)
+  UNIQUE index_blogs_dustbin (`owner_id`,`blog_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

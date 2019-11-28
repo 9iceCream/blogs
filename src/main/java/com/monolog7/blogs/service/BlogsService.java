@@ -1,17 +1,16 @@
 package com.monolog7.blogs.service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.monolog7.blogs.dao.BlogsDao;
 import com.monolog7.blogs.dao.BlogsOwnerDao;
 import com.monolog7.blogs.entity.Blog;
 import com.monolog7.blogs.entity.BlogsOwner;
+import com.monolog7.blogs.entity.DictionaryConst;
 import com.monolog7.blogs.entity.ErrorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +27,7 @@ public class BlogsService {
 
     public String queryBlogsByOwner(int ownerId){
         List<Blog> result = new ArrayList<>();
-        List<Blog> blogs = blogsDao.queryBlogsByOwner(ownerId);
+        List<Blog> blogs = blogsDao.queryBlogsByOwner(ownerId,DictionaryConst.DELETE_FLAG_1.getCode());
         for(Blog blog : blogs){
             result.add(execTimeAndTag(blog));
         }
@@ -46,7 +45,7 @@ public class BlogsService {
 
             BlogsOwner blogsOwner = blogsOwnerDao.queryUserByName(username);
             int ownerId = blogsOwner.getId();
-            List<Blog> blogs = blogsDao.queryBlogsByOwner(ownerId);
+            List<Blog> blogs = blogsDao.queryBlogsByOwner(ownerId, DictionaryConst.DELETE_FLAG_1.getCode());
             if(blogs != null && !blogs.isEmpty()){
                 List<Blog> blogList = new ArrayList<>();
                 for(Blog blog : blogs){
@@ -87,6 +86,32 @@ public class BlogsService {
         }else {
             jsonObject.put("code",ErrorInfo.CODE_1006.getCode());
             jsonObject.put("message",ErrorInfo.CODE_1006.getMessage());
+        }
+        return jsonObject.toJSONString();
+    }
+
+    public String deleteBlog(int ownerId,long blogId){
+        int result = blogsDao.updateBlogToDelete(ownerId,blogId);
+        JSONObject jsonObject = new JSONObject();
+        if(result>0){
+            jsonObject.put("code",ErrorInfo.CODE_0.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_0.getMessage());
+        }else{
+            jsonObject.put("code",ErrorInfo.CODE_1007.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_1007.getMessage());
+        }
+        return jsonObject.toJSONString();
+    }
+
+    public String recoverBlog(int ownerId,long blogId){
+        int result = blogsDao.updateBlogToNormal(ownerId,blogId);
+        JSONObject jsonObject = new JSONObject();
+        if(result>0){
+            jsonObject.put("code",ErrorInfo.CODE_0.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_0.getMessage());
+        }else{
+            jsonObject.put("code",ErrorInfo.CODE_1008.getCode());
+            jsonObject.put("message",ErrorInfo.CODE_1008.getMessage());
         }
         return jsonObject.toJSONString();
     }
