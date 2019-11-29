@@ -26,7 +26,7 @@ public class UserController {
     private BlogsOwnerService blogsOwnerService;
 
     @ApiOperation(value = "添加用户")
-    @CrossOrigin
+    @CrossOrigin(allowCredentials = "true")
     @RequestMapping(value = "/blogs/user",method = RequestMethod.POST)
     public String register(@RequestBody BlogsOwner blogsOwner){
         logger.info("register#入参：{}", JSON.toJSONString(blogsOwner));
